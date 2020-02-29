@@ -63,7 +63,7 @@ const SwipeableTextMobileStepper = ({product}: IProps) => {
         {product.gallery.map((step, index) => (console.log(step) as any) || (
           <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
-              <img className={classes.img} src={`http://api.myeden.xyz/${step.src}`} />
+              <img className={classes.img} src={step.src} />
             ) : null}
           </div>
         ))}

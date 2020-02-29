@@ -17,12 +17,17 @@ createStyles({
   root: {
     flexGrow: 1,
   },
+  MuiAppBar: {
+    background: 'linear-gradient(145deg,#027be3 11%,#1a237e 75%)',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
     display: 'none',
+    color: '#fff',
+    textDecoration: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -96,8 +101,8 @@ const CustomAppBar: React.FC = () => {
     <AppBar position="static">
       <Toolbar>
         <TemporaryDrawer />
-        <Typography className={classes.title} variant="h6" noWrap>
-            Market place
+        <Typography component={Link} to='/' className={classes.title} variant="h6" noWrap>
+            kenguru shop
         </Typography>
         <div className={classes.search}>
           <div className={classes.searchIcon}>

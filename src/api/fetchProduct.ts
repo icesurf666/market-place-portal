@@ -2,7 +2,7 @@ import handleError from './error'
 import defaultHeaders from './consts'
 
 function fetchProduct(id: number) {
-  return fetch(`/api/client/products/${id}`, {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/client/products/${id}`, {
     method: 'GET',
     headers: defaultHeaders(),
   })

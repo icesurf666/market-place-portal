@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { IShop } from 'react-app-env';
-import { CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -18,7 +17,11 @@ const useStyles = makeStyles({
   },
   card: {
     justifyContent: 'flex-end',
-  }
+  },
+  link: {
+    color: '#3f50b5',
+    textDecoration: 'none',
+  },
 });
 
 interface IShopProps {
@@ -33,7 +36,7 @@ const ShopCard = ({shop}: IShopProps) => {
           component="img"
           alt="Contemplative Reptile"
           height="250"
-          image={shop.logo}
+          image={shop.logo && shop.logo.src}
           title="Contemplative Reptile"
         />
         <CardContent>
@@ -46,8 +49,8 @@ const ShopCard = ({shop}: IShopProps) => {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.card}>
-        <Button size="small" color="primary">
-          Перейти в магазин
+      <Button size="small" color="primary">
+          <Typography className={classes.link} component={Link} to={`/shop/${shop.id}`} variant='inherit'>Перейти в магазин</Typography>
         </Button>
       </CardActions>
     </Card>

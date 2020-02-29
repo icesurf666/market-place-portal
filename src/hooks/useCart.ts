@@ -1,13 +1,12 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, clearCart, updateCart } from 'store/actions'
-import uuid from 'uuid'
 import { ICartItem } from 'react-app-env'
 import { cartSelector } from 'store/selectors'
 
 interface ICart {
-  items: Array<ICartItem>
-  resetItems: (carts: Array<ICartItem>) => void
+  items: ICartItem[]
+  resetItems: (carts: ICartItem[]) => void
   addItem: (item: ICartItem) => void
   removeItem: (item: ICartItem) => void
   removeItemCount: (item: ICartItem) => void
@@ -19,7 +18,6 @@ function useCart(): ICart {
   const dispatch = useDispatch()
   const { items } = useSelector(cartSelector)
   const addItem = useCallback((item: ICartItem) => {
-    items.map((item) => console.log(item.id))
     const index = items.findIndex(cartItem => item.id === cartItem.id)
     if (index === -1) {
       dispatch(addToCart({ ...item, id: item.id }))

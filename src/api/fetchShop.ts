@@ -2,7 +2,7 @@ import castError from './error'
 import defaultHeaders from './consts'
 
 function fetchShop(id: number) {
-  return fetch(`/api/client/shops/${id}`, {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/client/shops/${id}`, {
     method: 'GET',
     headers: defaultHeaders(),
   })

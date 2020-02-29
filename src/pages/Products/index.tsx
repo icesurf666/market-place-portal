@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import fetchProducts from 'api/fetchProducts';
-import useApi from 'hooks/useApi';
+import useFetch from 'hooks/useFetch';
 import { IProduct } from 'react-app-env';
 import ProductCard from 'components/ProductCard';
 
 const Products = () => {
 
-  const { data, fetch } = useApi(fetchProducts)
+  const { data, fetch } = useFetch(fetchProducts)
 
   useEffect(() => {
     fetch()

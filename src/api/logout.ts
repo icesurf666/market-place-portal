@@ -6,7 +6,7 @@ interface ILogoutParams {
 }
 
 function logout() {
-  return fetch('/api/auth/logout', {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/auth/logout`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })

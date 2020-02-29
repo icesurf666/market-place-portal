@@ -6,12 +6,12 @@ import { TextField } from 'final-form-material-ui'
 import login from 'api/login';
 import { useDispatch } from 'react-redux';
 import { setUserAfterSignIn } from 'store/actions';
-import useApi from 'hooks/useApi';
+import useFetch from 'hooks/useFetch';
 import { useHistory } from 'react-router-dom';
 
 const SignIn: React.FC = () => {
   let history = useHistory()
-  const { data, fetch: onSubmit } = useApi(login)
+  const { data, fetch: onSubmit } = useFetch(login)
   const dispatch = useDispatch()
   useEffect(() => {
     console.log(data)

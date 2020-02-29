@@ -8,7 +8,7 @@ interface ILoginParams {
 }
 
 function signUp({ login, password, c_password, email }: ILoginParams) {
-  return fetch('/api/auth/signup', {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/auth/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: login, password, email, c_password }),

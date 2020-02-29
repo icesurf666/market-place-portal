@@ -2,7 +2,7 @@ import isPlainObject from 'lodash/isPlainObject'
 import { useCallback, useState } from 'react'
 import handleError from 'api/error'
 
-export interface IUseApi<T> {
+export interface IUseFetch<T> {
   data: T | null,
   loading: boolean,
   loaded: boolean,
@@ -13,14 +13,14 @@ export interface IUseApi<T> {
   progress: number | null,
 }
 
-export interface IUseApiOptions<T> {
+export interface IUseFetchOptions<T> {
   onSuccess?: (data: T) => any,
   onFailure?: (error: any) => any,
 }
 
 export type ApiFunction<T> = (...args: any[]) => Promise<T>
 
-function useApi<T>(api: ApiFunction<T>, params: IUseApiOptions<T> = {}): IUseApi<T> {
+function useFetch<T>(api: ApiFunction<T>, params: IUseFetchOptions<T> = {}): IUseFetch<T> {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState(false)
   const [loaded, setLoaded] = useState(false)
@@ -45,7 +45,6 @@ function useApi<T>(api: ApiFunction<T>, params: IUseApiOptions<T> = {}): IUseApi
       setLoaded(true)
       if (params.onSuccess) { params.onSuccess(payload) }
     } catch (e) {
-      // setData(null)
       setError(e)
       handleError(e)
       if (params.onFailure) { params.onFailure(e) }
@@ -62,4 +61,4 @@ function useApi<T>(api: ApiFunction<T>, params: IUseApiOptions<T> = {}): IUseApi
   return { data, loading, loaded, error, fetch, clear, set: setData, progress }
 }
 
-export default useApi
+export default useFetch

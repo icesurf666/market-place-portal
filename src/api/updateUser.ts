@@ -9,7 +9,7 @@ interface IParams {
 }
 
 function updateUser({ id, login, password, email }: IParams) {
-  return fetch(`/api/client/users/${id}`, {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/client/users/${id}`, {
     method: 'PUT',
     headers: defaultHeaders(),
     body: JSON.stringify({ id, name: login, password, email }),

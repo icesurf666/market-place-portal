@@ -6,7 +6,7 @@ interface ILoginParams {
 }
 
 function login({ email, password }: ILoginParams) {
-  return fetch('/api/auth/login', {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),

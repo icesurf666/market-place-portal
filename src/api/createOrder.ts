@@ -1,6 +1,5 @@
 import handleError from './error'
 import defaultHeaders from './consts'
-import { ICartItem } from 'react-app-env'
 
 interface IParams {
   normalizeItems: any,
@@ -8,7 +7,7 @@ interface IParams {
 }
 
 function createOrder({ products, user}: any) {
-  return fetch(`/api/client/orders`, {
+  return fetch(`${process.env.REACT_APP_API_PATH}/api/client/orders`, {
     method: 'POST',
     headers: defaultHeaders(),
     body: JSON.stringify({ products, user }),

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import ShopCard from 'components/ShopCard'
-import useApi from 'hooks/useApi'
+import useFetch from 'hooks/useFetch'
 import fetchShops from 'api/fetchShops'
 import { IShop } from 'react-app-env'
 
 const Shops = () => {
-  const { data, fetch } = useApi(fetchShops)
+  const { data, fetch } = useFetch(fetchShops)
 
   useEffect(() => {
     fetch()
@@ -14,7 +14,6 @@ const Shops = () => {
 
   if(!data) return null
 
-  console.log(data)
   return (
   <Grid container spacing={1}>
     {data.data.map((shop: IShop) => {

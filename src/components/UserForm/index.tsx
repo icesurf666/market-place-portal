@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import { Form, Field } from 'react-final-form'
 import { Paper, Grid, Button} from '@material-ui/core'
 import { TextField } from 'final-form-material-ui'
-import useApi from 'hooks/useApi'
+import useFetch from 'hooks/useFetch'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserAfterUpdate } from 'store/actions'
 import updateUser from 'api/updateUser'
@@ -13,7 +13,7 @@ import { IUser } from 'react-app-env'
 const UserForm: React.FC = () => {
 
   const user: IUser = useSelector((store: any) => get(store, 'auth.user.user', []))
-  const { data, fetch } = useApi(updateUser)
+  const { data, fetch } = useFetch(updateUser)
   const dispatch = useDispatch()
 
   const saveUser = useCallback(async(values) => { 

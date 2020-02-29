@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form'
 import { Paper, Grid, Button} from '@material-ui/core'
 import { TextField } from 'final-form-material-ui'
 import signUp from 'api/signUp'
-import useApi from 'hooks/useApi'
+import useFetch from 'hooks/useFetch'
 import { useDispatch } from 'react-redux'
 import { setUserAfterSignUp } from 'store/actions'
 import { useHistory } from 'react-router-dom'
@@ -15,7 +15,7 @@ const onSubmit = async (values: any) => {
 
 const SignUp: React.FC = () => {
   let history = useHistory()
-  const { data, fetch: onSubmit } = useApi(signUp)
+  const { data, fetch: onSubmit } = useFetch(signUp)
   const dispatch = useDispatch()
   useEffect(() => {
     if (!data) { return }

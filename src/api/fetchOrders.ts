@@ -2,7 +2,7 @@ import castError from './error'
 import defaultHeaders from './consts'
 
 function fetchOrders(page?: string) {
-  return fetch(!page ? `/api/client/orders` : `/api/client/orders?page=${page}`, {
+  return fetch(!page ? `${process.env.REACT_APP_API_PATH}/api/client/orders` : `${process.env.REACT_APP_API_PATH}/api/client/orders?page=${page}`, {
     method: 'GET',
     headers: defaultHeaders(),
   },

@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { IProduct } from 'react-app-env';
 import { Link } from 'react-router-dom';
 import useCart from 'hooks/useCart';
-import uuid from 'uuid';
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +43,7 @@ const ProductCard = ({ product }: IProductCard) => {
         <CardMedia
           component="img"
           height="230"
-          image={`http://api.myeden.xyz/${product.logo}`}
+          image={product.logo && product.logo.src || 'https://lh3.googleusercontent.com/proxy/swbWqEWmWU3Hr_FPIowwbja8kDQfDit38LUTfYUhb_m94lbdR_1ieoyvvlfMXqmRltfBz0LoNEn0NCJFaT7MMs9y7qt6aJWa_btmr5GKsWssigixrq8'}
         />
         <CardContent className={classes.cardAction}>
           <Typography gutterBottom variant="h5" component="h2">

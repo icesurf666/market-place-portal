@@ -17,6 +17,7 @@ import { IUser } from 'react-app-env';
 import { get } from 'lodash';
 import PrivateRoute from 'components/PrivateRoute';
 import { store, persistor } from 'store'
+import Home from 'pages/Home';
 
 
 const App = () => {
@@ -28,8 +29,9 @@ const App = () => {
       <Router>
         <CustomAppBar />
         <CssBaseline />
+        <Route path='/' exact component={Home}></Route>
         <Container style={{paddingTop: '30px', paddingBottom: '50px'}}>
-          <PrivateRoute path="/products" component={Products} />
+          <Route path="/products" component={Products} />
           <Route path="/product/:id" component={Product} />
           <Route path="/shops" component={Shops} />
           <Route path="/cart" component={Cart}><Cart /></Route>

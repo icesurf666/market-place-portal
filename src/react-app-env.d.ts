@@ -3,7 +3,7 @@ export declare interface IShop {
   id: number,
   name: string,
   description: string,
-  logo: string,
+  logo?: ISrc,
 }
 
 interface ISrc {
@@ -14,7 +14,7 @@ export declare interface IProduct {
   name: string,
   description: string,
   shop: IShop,
-  logo: string,
+  logo?: ISrc,
   gallery: ISrc[],
   price: number,
   currency: ICurrency,

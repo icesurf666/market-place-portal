@@ -27,6 +27,7 @@ const CartTable = () => {
           removeItem(remove);
         });
   }
+
   const handleAdd = (selectableRows: number) => {
     items
       .filter((item, index) => index === selectableRows)
@@ -34,6 +35,7 @@ const CartTable = () => {
         addItem(add)
       });
 }
+
 const handleRemove = (selectableRows: number) => {
   items
     .filter((item, index) => index === selectableRows)

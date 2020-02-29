@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import fetchShop from 'api/fetchShop';
-import useApi from 'hooks/useApi';
+import useFetch from 'hooks/useFetch';
 import { IProduct } from 'react-app-env';
 import ProductCard from 'components/ProductCard';
 import { RouteComponentProps } from 'react-router-dom';
 
 const Shop: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, location }) => {
 
-  const { data, fetch } = useApi(fetchShop)
+  const { data, fetch } = useFetch(fetchShop)
   const id = Number(match.params.id)
   console.log(data)
   useEffect(() => {

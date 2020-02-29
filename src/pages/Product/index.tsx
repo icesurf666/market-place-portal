@@ -3,12 +3,12 @@ import TextMobileStepper from 'components/Slider';
 import { Grid } from '@material-ui/core';
 import DescriptionCart from 'components/DescriptionCart';
 import fetchProduct from 'api/fetchProduct';
-import useApi from 'hooks/useApi';
+import useFetch from 'hooks/useFetch';
 import { RouteComponentProps } from 'react-router-dom';
 
 
 const Product: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, location }) => {
-  const { data, fetch } = useApi(fetchProduct)
+  const { data, fetch } = useFetch(fetchProduct)
   const id = Number(match.params.id)
   console.log(id)
   useEffect(() => {

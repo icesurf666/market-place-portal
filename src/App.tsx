@@ -30,10 +30,12 @@ const App = () => {
         <CustomAppBar />
         <CssBaseline />
         <Route path='/' exact component={Home}></Route>
+        <Route path="/products" component={Products} />
+
         <Container style={{paddingTop: '30px', paddingBottom: '50px'}}>
-          <Route path="/products" component={Products} />
           <Route path="/product/:id" component={Product} />
           <Route path="/shops" component={Shops} />
+
           <Route path="/cart" component={Cart}><Cart /></Route>
           <Route path='/user' component={UserForm}><UserForm /></Route>
           <Route path='/shop/:id' component={Shop} />

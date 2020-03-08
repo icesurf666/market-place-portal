@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { useSelector } from 'react-redux';
 import { get, omit } from 'lodash';
 import useCart from 'hooks/useCart';
+import Rating from '@material-ui/lab/Rating';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     margin: {
@@ -32,6 +33,7 @@ const DescriptionCart = ({product}: IProps) => {
       <Grid item xs={12}>
       <Typography variant="h3">{product.name}</Typography>
       <Typography gutterBottom variant="h6">{product.description}</Typography>
+      <Rating name="read-only" value={2} readOnly />
       <Typography gutterBottom variant="h6">{product.price}{product.currency.name}</Typography>
    
       </Grid>

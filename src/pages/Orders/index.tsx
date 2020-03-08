@@ -40,16 +40,17 @@ const Orders: React.FC = () => {
   const [page, setPage] = useState(1);
   const { data, fetch } = useFetch(fetchOrders);
 
+  const handleChange = (event: any, value: number) => {
+    setPage(value);
+  };
+
   useEffect(() => {
-    fetch();
-  }, []);
+    fetch(page);
+  }, [page, fetch]);
 
   if (!data) return null;
 
-  const handleChange = (event: any, value: number) => {
-    setPage(value);
-    fetch(value);
-  };
+ 
 
   console.log(data);
   const normalizeData = data.data.map((items: any, index: number) => {

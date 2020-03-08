@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { IShop } from 'react-app-env';
 import { Link } from 'react-router-dom';
+import noImage from 'assets/noimage.png'
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +23,11 @@ const useStyles = makeStyles({
     color: '#3f50b5',
     textDecoration: 'none',
   },
+  desc: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
 });
 
 interface IShopProps {
@@ -34,16 +40,14 @@ const ShopCard = ({shop}: IShopProps) => {
       <CardActionArea component={Link} to={`/shop/${shop.id}`}>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
           height="250"
-          image={shop.logo && shop.logo.src}
-          title="Contemplative Reptile"
+          image={shop.logo && shop.logo.src || noImage}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {shop.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" className={classes.desc}>
             {shop.description}
           </Typography>
         </CardContent>

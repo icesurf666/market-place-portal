@@ -4,28 +4,35 @@ import { Grid } from '@material-ui/core';
 import DescriptionCart from 'components/DescriptionCart';
 import fetchProduct from 'api/fetchProduct';
 import useFetch from 'hooks/useFetch';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import SlickSlider from './components/SliderSlick';
+import TabsReviews from 'components/DescriptionCart/components/TabsReviews';
 
 
 const Product: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, location }) => {
   const { data, fetch } = useFetch(fetchProduct)
   const id = Number(match.params.id)
-  console.log(id)
   useEffect(() => {
     fetch(id)
-  }, [fetch])
+  }, [fetch, id])
 
   if(!data) return null
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <TextMobileStepper product={data.data} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <DescriptionCart product={data.data} />
+      </Grid>
+      <Grid item xs={12}>
+        <TabsReviews product={data.data} />
+      </Grid>
+      <Grid item xs={12}>
+        <SlickSlider />
       </Grid>
     </Grid>
   );
 }
 
-export default Product
+export default withRouter(Product)

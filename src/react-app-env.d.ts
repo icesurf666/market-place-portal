@@ -19,6 +19,8 @@ export declare interface IProduct {
   price: number,
   currency: ICurrency,
   weight?: number,
+  rating: number,
+  reviews: IReviews,
 }
 
 export declare interface ICurrency {
@@ -50,4 +52,12 @@ declare interface ICartItem {
   count: number,
   status?: string,
   total_price?: number,
+}
+
+declare interface IReview {
+  item_id: number,
+  user: IUser,
+  comment: string,
+  rating: number,
+  created_at: string,
 }

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { IProduct } from 'react-app-env';
 import { Link } from 'react-router-dom';
 import useCart from 'hooks/useCart';
+import noImage from 'assets/noimage.png'
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +22,14 @@ const useStyles = makeStyles({
   },
   cardAction: {
     height: 120,
+  },
+  desc: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  title: {
+    lineHeight: 1,
   }
 });
 
@@ -43,13 +52,13 @@ const ProductCard = ({ product }: IProductCard) => {
         <CardMedia
           component="img"
           height="230"
-          image={product.logo && product.logo.src || 'https://lh3.googleusercontent.com/proxy/swbWqEWmWU3Hr_FPIowwbja8kDQfDit38LUTfYUhb_m94lbdR_1ieoyvvlfMXqmRltfBz0LoNEn0NCJFaT7MMs9y7qt6aJWa_btmr5GKsWssigixrq8'}
+          image={product.logo && product.logo.src || noImage}
         />
         <CardContent className={classes.cardAction}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6" component="h2" className={classes.title}>
             {product.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" className={classes.desc}>
             {product.description}
           </Typography>
         </CardContent>

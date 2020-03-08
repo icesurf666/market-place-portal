@@ -60,7 +60,7 @@ const SwipeableTextMobileStepper = ({product}: IProps) => {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {product.gallery.map((step, index) => (console.log(step) as any) || (
+        {product.gallery.map((step, index) => (
           <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
               <img className={classes.img} src={step.src} />

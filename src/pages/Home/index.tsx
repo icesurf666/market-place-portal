@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   makeStyles,
   createStyles,
@@ -11,6 +11,8 @@ import img from "./assets/2.jpg";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Animated } from "react-animated-css";
 import ShopImages from "./components/ShopImages";
+import SimpleModal from "components/Modal";
+import LeadForm from "./components/LeadForm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Home: React.FC = () => {
   const classes = useStyles();
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleOpen = useCallback(() => setModalVisible(true), []);
+  const handleClose = useCallback(() => setModalVisible(false), []);
+
   return (
     <div>
       <div className={classes.root}>
@@ -97,16 +103,20 @@ const Home: React.FC = () => {
                 color="secondary"
                 size="large"
                 className={classes.btn}
+                onClick={handleOpen}
               >
                 Кнопка
               </Button>
+              <SimpleModal title={'Подать заявку'} open={modalVisible} close={handleClose}>
+              
+              <LeadForm />
+              </SimpleModal>
             </Animated>
           </div>
 
           <div className={classes.wrap}>
             <ArrowDownwardIcon fontSize="large" className={classes.icon} />
           </div>
-          <Typography variant="h3">Магазины</Typography>
         </Container>
       </div>
       <ShopImages />

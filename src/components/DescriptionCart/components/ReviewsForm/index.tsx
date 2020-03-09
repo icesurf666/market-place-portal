@@ -5,16 +5,20 @@ import {
   Grid,
   Button,
   TextField,
-  CircularProgress
+  CircularProgress,
+  Typography
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import createReview from "api/createReviews";
-import { IProduct } from "react-app-env";
+import { IProduct, IUser } from "react-app-env";
+import { useSelector } from "react-redux";
+import get from "lodash/get";
 
 interface IProps {
   product: IProduct;
 }
 const ReviewsForm = ({ product }: IProps) => {
+  const isAuth: IUser = useSelector((store: any) => get(store, 'auth.isAuth', []))
   const [value, setValue] = React.useState<number | null>(0);
   const [desc, setDesc] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,6 +43,7 @@ const ReviewsForm = ({ product }: IProps) => {
   };
 
   return (
+    isAuth ? (
     <form>
       <Paper style={{ padding: 16 }}>
         <Grid container alignItems="center" justify="center" spacing={2}>
@@ -74,6 +79,13 @@ const ReviewsForm = ({ product }: IProps) => {
         </Grid>
       </Paper>
     </form>
+    ) : (
+      <Paper style={{ padding: 16 }}>
+        <Typography>
+          Для того, чтобы написать отзыв, войдите или зарегистрируйтесь.
+        </Typography>
+      </Paper>
+    )
   );
 };
 

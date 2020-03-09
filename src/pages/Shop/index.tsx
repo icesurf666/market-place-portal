@@ -5,6 +5,7 @@ import useFetch from 'hooks/useFetch';
 import { IProduct } from 'react-app-env';
 import ProductCard from 'components/ProductCard';
 import { RouteComponentProps } from 'react-router-dom';
+import noImage from 'assets/noimage.png'
 
 const useStyles = makeStyles({
   background: {
@@ -33,7 +34,7 @@ const Shop: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, loc
     <>
     <Grid>
       <div className={classes.background}>
-        <CardMedia image={data.data.logo.src} className={classes.background}/>
+        <CardMedia image={data.data.logo && data.data.logo.src || noImage} className={classes.background}/>
         </div>
       <Typography variant='h4' className={classes.title}>
         {data.data.name}

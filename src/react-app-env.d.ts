@@ -21,6 +21,8 @@ export declare interface IProduct {
   weight?: number,
   rating: number,
   reviews: IReviews,
+  html: string,
+  amount: number,
 }
 
 export declare interface ICurrency {

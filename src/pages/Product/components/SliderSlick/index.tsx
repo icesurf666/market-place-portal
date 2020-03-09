@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./customArrows.css";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({

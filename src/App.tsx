@@ -35,12 +35,11 @@ const App = () => {
         <Container style={{paddingTop: '30px', paddingBottom: '50px'}}>
           <Route path="/product/:id" component={Product} />
           <Route path="/shops" component={Shops} />
-
-          <Route path="/cart" component={Cart}><Cart /></Route>
-          <Route path='/user' component={UserForm}><UserForm /></Route>
+          <PrivateRoute path="/cart" component={Cart} />
+          <PrivateRoute path='/user' component={UserForm} />
           <Route path='/shop/:id' component={Shop} />
-          <Route path="/auth" exact component={Auth}></Route>
-          <Route path="/orders" exact component={Orders}></Route>
+          <Route path="/auth" exact component={Auth} />
+          <PrivateRoute path="/orders" component={Orders} />
         </Container>
         </Router>
       </PersistGate>

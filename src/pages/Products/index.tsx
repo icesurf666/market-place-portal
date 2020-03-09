@@ -6,29 +6,38 @@ import { IProduct } from "react-app-env";
 import ProductCard from "components/ProductCard";
 import Filters from "./components/Filters";
 import Pagination from "@material-ui/lab/Pagination";
+import BigLoader from 'components/BigLoader'
 
 const Products = () => {
   const [value, setValue] = React.useState<number[]>([1, 3000]);
 
-  const { data, fetch } = useFetch(fetchProducts);
-  const [page, setPage] = useState(1)
+  const { data, fetch, loading } = useFetch(fetchProducts);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetch(page);
   }, [fetch, page]);
 
-
   const handleChange = (event: any, value: number) => {
     setPage(value);
-  }
+  };
 
-  const onChangePrice = useCallback((event: any, newValue: number[]) => {
-    setValue(newValue as number[]);
-    return data && data.data.filter((product: IProduct) => product.price >= newValue[0] && product.price <= newValue[1])
-  }, [data]);
+  const onChangePrice = useCallback(
+    (event: any, newValue: number[]) => {
+      setValue(newValue as number[]);
+      return (
+        data &&
+        data.data.filter(
+          (product: IProduct) =>
+            product.price >= newValue[0] && product.price <= newValue[1]
+        )
+      );
+    },
+    [data]
+  );
 
   if (!data) return null;
-  
+
   return (
     <Grid container>
       <Grid item xs={3}>
@@ -46,15 +55,16 @@ const Products = () => {
             })}
           </Grid>
           <Grid style={{ marginTop: 20 }} container justify="center">
-        <Pagination
-          page={page}
-          onChange={handleChange}
-          count={Math.ceil(data.meta.total / data.meta.perPage)}
-          color="primary"
-        />
-      </Grid>
+            <Pagination
+              page={page}
+              onChange={handleChange}
+              count={Math.ceil(data.meta.total / data.meta.perPage)}
+              color="primary"
+            />
+          </Grid>
         </Container>
       </Grid>
+      {loading && <BigLoader />}
     </Grid>
   );
 };

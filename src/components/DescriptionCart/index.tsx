@@ -1,53 +1,95 @@
-import React from 'react'
-import { Typography, Button, createStyles, makeStyles, Theme, Grid, IconButton } from '@material-ui/core'
-import { IProduct, ICartItem } from 'react-app-env';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import { useSelector } from 'react-redux';
-import { get, omit } from 'lodash';
-import useCart from 'hooks/useCart';
-import Rating from '@material-ui/lab/Rating';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Typography,
+  Button,
+  createStyles,
+  makeStyles,
+  Theme,
+  Grid,
+  IconButton
+} from "@material-ui/core";
+import { IProduct, ICartItem, IUser } from "react-app-env";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import { useSelector } from "react-redux";
+import { get, omit } from "lodash";
+import useCart from "hooks/useCart";
+import Rating from "@material-ui/lab/Rating";
+import Availability from "./components/Availability";
+import createOrder from "api/createOrder";
+import { useHistory, Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     margin: {
-      margin: theme.spacing(2),
+      margin: theme.spacing(2)
     },
     extendedIcon: {
-      marginRight: theme.spacing(1),
+      marginRight: theme.spacing(1)
     },
-  }),
+    wrap: {
+      marginTop: 20,
+      marginLeft: 50
+    }
+  })
 );
 
 interface IProps {
-  product: IProduct
+  product: IProduct;
 }
-const DescriptionCart = ({product}: IProps) => {
+const DescriptionCart = ({ product }: IProps) => {
+  const [redirect, setRedirect] = useState(false)
+  const renderRedirect = () => {
+    if (redirect) {
+      return <Redirect to='/cart' />
+    }
+  }
+  const classes = useStyles();
+  const { addItem, items } = useCart();
+  const Ids = items.map(item => item.product.id);
+  const isInclude = Ids.includes(product.id);
+
+  const item = { product, count: 1, id: product.id };
+  const onAddCart = useCallback(() => {
+    addItem(item);
+  }, [item, items]);
   
-  const { items } = useCart()
-  const classes = useStyles()
-  const Ids = items.map((item) => item.product.id)
-  const isInclude = Ids.includes(product.id)
+  const buyNow = useCallback(async () => {
+    addItem(item);
+    setRedirect(true)
+  }, [item, items]);
+
   return (
     <>
-    <Grid container>
-      <Grid item xs={12}>
-      <Typography variant="h3">{product.name}</Typography>
-      <Typography gutterBottom variant="h6">{product.description}</Typography>
-      <Rating name="read-only" value={2} readOnly />
-      <Typography gutterBottom variant="h6">{product.price}{product.currency.name}</Typography>
-   
-      </Grid>
-      <Grid item xs={12}>
-      <Button variant="contained" size="large" color="primary">
-          Купить сейчас
-        </Button>
-        <Button variant="outlined" size="large" color="primary" className={classes.margin}>
-          {isInclude ? `Добавить еще раз` : `Добавить в корзину`}
-        </Button>
+      <Grid container className={classes.wrap}>
+        <Grid item xs={12}>
+          <Typography variant="h4">{product.name}</Typography>
+          <Rating name="read-only" value={2} readOnly />
+          <div style={{ fontSize: 16 }}>Оценка товара: 2 из 5</div>
+          <Availability amount={product.amount} />
+          <Typography gutterBottom variant="h6">
+            {product.price}
+            {product.currency.name}
+          </Typography>
         </Grid>
-        </Grid>
-    </>
-  )
-}
 
-export default DescriptionCart
+        <Grid item xs={12}>
+          {renderRedirect()}
+          <Button onClick={buyNow} variant="contained" size="large" color="primary">
+            Купить сейчас
+          </Button>
+          <Button
+            onClick={onAddCart}
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.margin}
+          >
+            {isInclude ? `Добавить еще раз` : `Добавить в корзину`}
+          </Button>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+export default DescriptionCart;

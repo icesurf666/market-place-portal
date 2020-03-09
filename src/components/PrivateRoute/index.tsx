@@ -18,7 +18,7 @@ function PrivateRoute({component: Component, path, ...rest}: IProps) {
     {...rest}
     render={props => isAuth
     ? <Component {...props} />
-    :<Redirect to='/auth' />
+    : <Redirect to='/auth' />
     }
   />
 )

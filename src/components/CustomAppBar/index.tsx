@@ -9,7 +9,7 @@ import logoutFetch from 'api/logout'
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore'
 import { signOutUser } from 'store/actions';
 import { IUser } from 'react-app-env';
-import { get } from 'lodash';
+import { get, sumBy } from 'lodash';
 import useCart from 'hooks/useCart';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -75,6 +75,7 @@ createStyles({
 
 const CustomAppBar: React.FC = () => {
   const { items } = useCart()
+  const countProduct = sumBy(items, 'count')
   const dispatch = useDispatch()
   const isAuth: IUser = useSelector((store: any) => get(store, 'auth.isAuth', []))
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -119,7 +120,7 @@ const CustomAppBar: React.FC = () => {
         </div>
         <MenuItem component={Link} to='/cart'>
         <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={items.length} color="secondary">
+          <Badge badgeContent={countProduct} color="secondary">
             <LocalGroceryStoreIcon />
           </Badge>
         </IconButton>

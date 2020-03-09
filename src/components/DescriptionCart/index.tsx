@@ -37,12 +37,9 @@ interface IProps {
   product: IProduct;
 }
 const DescriptionCart = ({ product }: IProps) => {
-  const [redirect, setRedirect] = useState(false)
-  const renderRedirect = () => {
-    if (redirect) {
-      return <Redirect to='/cart' />
-    }
-  }
+  let history = useHistory()
+  const isAuth: IUser = useSelector((store: any) => get(store, 'auth.isAuth', []))
+
   const classes = useStyles();
   const { addItem, items } = useCart();
   const Ids = items.map(item => item.product.id);
@@ -50,12 +47,17 @@ const DescriptionCart = ({ product }: IProps) => {
 
   const item = { product, count: 1, id: product.id };
   const onAddCart = useCallback(() => {
-    addItem(item);
+    isAuth ?
+    addItem(item) : history.push('/auth');
   }, [item, items]);
   
   const buyNow = useCallback(async () => {
-    addItem(item);
-    setRedirect(true)
+    if(isAuth) {
+      addItem(item)
+      history.push('/cart')
+    } else {
+      history.push('/auth')
+    }
   }, [item, items]);
 
   return (
@@ -73,7 +75,6 @@ const DescriptionCart = ({ product }: IProps) => {
         </Grid>
 
         <Grid item xs={12}>
-          {renderRedirect()}
           <Button onClick={buyNow} variant="contained" size="large" color="primary">
             Купить сейчас
           </Button>

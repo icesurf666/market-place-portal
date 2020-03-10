@@ -7,10 +7,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { IProduct } from 'react-app-env';
-import { Link } from 'react-router-dom';
+import { IProduct, IUser } from 'react-app-env';
+import { Link, useHistory } from 'react-router-dom';
 import useCart from 'hooks/useCart';
 import noImage from 'assets/noimage.png'
+import { useSelector } from 'react-redux';
+import get from 'lodash/get';
 
 const useStyles = makeStyles({
   root: {
@@ -39,10 +41,14 @@ interface IProductCard {
 
 const ProductCard = ({ product }: IProductCard) => {
   const classes = useStyles();
+  let history = useHistory()
+  const isAuth: IUser = useSelector((store: any) => get(store, 'auth.isAuth', []))
   const { addItem, items } = useCart()
   const item = { product, count: 1, id: product.id }
   const onAddCart = useCallback(() => {
-    addItem(item)
+    isAuth ?
+    addItem(item) 
+    : history.push('/auth');
   }, [item, items])
   
   return (

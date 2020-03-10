@@ -12,6 +12,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StarRating from './components/StarRating';
 import PriceFilter from './components/PriceFilter';
+import SearchFilter from './components/SearchFilter'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,8 +36,9 @@ interface IProps {
   onChange?: any,
   value: number[],
   products: any,
+  page?: number
 }
-const Filters = ({products, value, onChange}: IProps) => {
+const Filters = ({ products, value, onChange, page }: IProps) => {
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -79,14 +81,11 @@ const Filters = ({products, value, onChange}: IProps) => {
           aria-controls="panel3bh-content"
           id="panel3bh-header"
         >
-          <Typography className={classes.heading}>Advanced settings</Typography>
+          <Typography className={classes.heading}>Поиск</Typography>
      
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
-            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
-            vitae egestas augue. Duis vel est augue.
-          </Typography>
+          <SearchFilter products={products} page={page} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>

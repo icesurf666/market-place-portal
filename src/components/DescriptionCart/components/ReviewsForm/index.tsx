@@ -22,6 +22,7 @@ const ReviewsForm = ({ product }: IProps) => {
   const [value, setValue] = React.useState<number | null>(0);
   const [desc, setDesc] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState();
   const rating = value !== null ? value : 0;
 
   const onSubmit = async (event: any) => {
@@ -32,7 +33,8 @@ const ReviewsForm = ({ product }: IProps) => {
         rating: rating,
         comment: desc,
         product_id: product.id
-      });
+      })
+      .then((res) => res.success ? setSuccess(true) : setSuccess(false));
     } catch (e) {
       console.log(e.message);
     }
@@ -46,6 +48,8 @@ const ReviewsForm = ({ product }: IProps) => {
     isAuth ? (
     <form>
       <Paper style={{ padding: 16 }}>
+        {success ? <Typography>Ваш отзыв будет добавлен после модерации</Typography> : ''}
+        {success === false ? <Typography>Ошибка, убедитесь в заполненности всех полей или повторите позже</Typography> : ''}
         <Grid container alignItems="center" justify="center" spacing={2}>
           <Grid item xs={12}>
             <Rating

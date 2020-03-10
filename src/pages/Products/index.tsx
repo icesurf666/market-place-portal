@@ -41,7 +41,7 @@ const Products = () => {
   return (
     <Grid container>
       <Grid item xs={3}>
-        <Filters value={value} onChange={onChangePrice} products={data} />
+        <Filters value={value} onChange={onChangePrice} products={data} page={page} />
       </Grid>
       <Grid item xs={9}>
         <Container>

@@ -1,15 +1,13 @@
 import React, { useMemo, useCallback } from "react";
 import MUIDataTable from "mui-datatables";
-import { IProduct, ICart, ICartItem, IUser } from "react-app-env";
-import { isEqual, sum, get } from "lodash";
+import { IUser } from "react-app-env";
+import { get, sumBy } from "lodash";
 import { useSelector } from "react-redux";
 import {
   Button,
   Grid,
-  FormControlLabel,
-  Switch,
-  Icon,
-  Typography
+  Typography,
+  Paper
 } from "@material-ui/core";
 import createOrder from "api/createOrder";
 import useCart from "hooks/useCart";
@@ -21,11 +19,11 @@ import AddIcon from "@material-ui/icons/Add";
 const CartTable = () => {
   const { items, clear, removeItem, addItem, removeItemCount } = useCart();
   const handleDelete = (selectableRows: number) => {
-      items
-        .filter((item, index) => index === selectableRows)
-        .map(remove => {
-          removeItem(remove);
-        });
+    items
+      .filter((item, index) => index === selectableRows)
+      .map(remove => {
+        removeItem(remove);
+      });
   }
 
   const handleAdd = (selectableRows: number) => {
@@ -34,15 +32,15 @@ const CartTable = () => {
       .map(add => {
         addItem(add)
       });
-}
+  }
 
-const handleRemove = (selectableRows: number) => {
-  items
-    .filter((item, index) => index === selectableRows)
-    .map(add => {
-      removeItemCount(add)
-    });
-}
+  const handleRemove = (selectableRows: number) => {
+    items
+      .filter((item, index) => index === selectableRows)
+      .map(add => {
+        removeItemCount(add)
+      });
+  }
 
 
   const columns = [
@@ -79,17 +77,17 @@ const handleRemove = (selectableRows: number) => {
       options: {
         filter: false,
         customBodyRender: (selectableRows: number) => {
-          return ( 
+          return (
             <>
-            <IconButton onClick={() => handleRemove(selectableRows)}>
-              <RemoveIcon />
-            </IconButton>
-            <IconButton onClick={() => handleAdd(selectableRows)}>
-              <AddIcon />
-            </IconButton>
-            <IconButton onClick={() => handleDelete(selectableRows)}>
-              <DeleteIcon color="error" />
-            </IconButton>
+              <IconButton onClick={() => handleRemove(selectableRows)}>
+                <RemoveIcon />
+              </IconButton>
+              <IconButton onClick={() => handleAdd(selectableRows)}>
+                <AddIcon />
+              </IconButton>
+              <IconButton onClick={() => handleDelete(selectableRows)}>
+                <DeleteIcon color="error" />
+              </IconButton>
             </>
           );
         }
@@ -101,17 +99,17 @@ const handleRemove = (selectableRows: number) => {
     get(store, "auth.user.user", [])
   );
 
-  const carts = 
+  const carts =
     items.map((item, index) => {
       const total = item.product.price * item.count;
       return [item.product.name, item.product.price, total, item.count, index];
     });
- 
+
 
   const products = items.map(item => {
-      return { id: item.product.id, amount: item.count };
-    });
- ;
+    return { id: item.product.id, amount: item.count };
+  });
+  ;
 
   const userId = getUser.id;
   const payload = { products, user: { id: userId } };
@@ -126,11 +124,15 @@ const handleRemove = (selectableRows: number) => {
       clear();
     });
   }, []);
-
+  const total = items.map((item, index) => {
+    const total = item.product.price * item.count;
+    return { total }
+  });
+  const sum = sumBy(total, 'total')
   return (
     <>
       <Grid container justify="space-between">
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <MUIDataTable
             title={"Корзина"}
             data={carts}
@@ -138,31 +140,38 @@ const handleRemove = (selectableRows: number) => {
             options={{
               filter: false,
               sort: false,
-              selectableRows: "none"
+              selectableRows: "none",
+              print: false,
+              download: false,
+              viewColumns: false,
             }}
           />
         </Grid>
-        <Grid item xs={2}>
-          <Button
-            onClick={handleClick}
-            variant="contained"
-            size="large"
-            color="primary"
-            fullWidth
-            style={{marginBottom: 20}}
-          >
-            Купить сейчас
+        <Grid item xs={3}>
+          <Paper style={{ padding: 16 }}>
+            <Typography variant='h5'>
+              Итого: {sum}₽
+            </Typography>
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              color="primary"
+              fullWidth
+              style={{ marginBottom: 20, marginTop: 10 }}
+            >
+              Оплатить
           </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<DeleteIcon />}
-            fullWidth
-            onClick={onResetCart}
-          >
-            Очистить корзину
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<DeleteIcon />}
+              fullWidth
+              onClick={onResetCart}
+            >
+              Очистить корзину
           </Button>
-          <Typography variant="h6">{}</Typography>
+            <Typography variant="h6">{}</Typography>
+          </Paper>
         </Grid>
       </Grid>
     </>

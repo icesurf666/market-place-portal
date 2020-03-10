@@ -1,4 +1,4 @@
-import { UPDATE_USER, SIGNOUT_USER, SIGNIN_USER, SIGNUP_USER, ADD_TO_CART, CLEAR_CART, UPDATE_CART } from "./actionTypes";
+import { UPDATE_USER, SIGNOUT_USER, SIGNIN_USER, SIGNUP_USER, ADD_TO_CART, CLEAR_CART, UPDATE_CART, CHANGE_THEME } from "./actionTypes";
 import { IUser, ICartItem } from "react-app-env";
 
 
@@ -88,3 +88,8 @@ export function updateCart(items: Array<ICartItem>): IUpdateCartAction {
     payload: items,
   }
 }
+
+export const changeTheme = (theme: any) => ({
+    type: CHANGE_THEME,
+    payload: theme,
+});

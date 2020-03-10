@@ -26,7 +26,10 @@ const Reviews = ({ reviews }: IProps) => {
 
   return (
     <div>
-      {reviews.map(review => (
+      {reviews.length === 0 ?
+      <Typography>К сожалению, отзыв пока никто не оставил</Typography>
+      :
+      reviews.map(review => (
         <Paper className={classes.paper}>
           <div className={classes.avatar}>
             <Avatar src={review.user.logo} />

@@ -9,14 +9,11 @@ import {
   IconButton
 } from "@material-ui/core";
 import { IProduct, ICartItem, IUser } from "react-app-env";
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
 import { useSelector } from "react-redux";
 import { get, omit } from "lodash";
 import useCart from "hooks/useCart";
 import Rating from "@material-ui/lab/Rating";
 import Availability from "./components/Availability";
-import createOrder from "api/createOrder";
 import { useHistory, Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +45,8 @@ const DescriptionCart = ({ product }: IProps) => {
   const item = { product, count: 1, id: product.id };
   const onAddCart = useCallback(() => {
     isAuth ?
-    addItem(item) : history.push('/auth');
+    addItem(item) 
+    : history.push('/auth');
   }, [item, items]);
   
   const buyNow = useCallback(async () => {
@@ -65,8 +63,8 @@ const DescriptionCart = ({ product }: IProps) => {
       <Grid container className={classes.wrap}>
         <Grid item xs={12}>
           <Typography variant="h4">{product.name}</Typography>
-          <Rating name="read-only" value={2} readOnly />
-          <div style={{ fontSize: 16 }}>Оценка товара: 2 из 5</div>
+          <Rating name="read-only" value={product.rating} readOnly />
+          <div style={{ fontSize: 16 }}>Оценка товара: {product.rating} из 5</div>
           <Availability amount={product.amount} />
           <Typography gutterBottom variant="h6">
             {product.price}

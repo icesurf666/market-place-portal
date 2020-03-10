@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
     heading: {
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular
+    },
+    wrapper: {
     }
   })
 );
@@ -66,7 +68,7 @@ const Orders: React.FC = () => {
 
   return (
     <Grid xs={12}>
-      <>
+      <Grid className={classes.wrapper}>
         {data.data.map((order: any, index: number) => {
           return (
             <Grid item key={index} style={{ marginTop: 10 }}>
@@ -92,9 +94,17 @@ const Orders: React.FC = () => {
                   <Grid container justify="space-between">
                     <Grid item xs={6}>
                       <MUIDataTable
-                        title={"Корзина"}
+                        title={"Заказ"}
                         data={normalizeData[index]}
                         columns={columns}
+                        options={{
+                          filter: false,
+                          sort: false,
+                          selectableRows: "none",
+                          print: false,
+                          download: false,
+                          viewColumns: false,
+                        }}
                       />
                     </Grid>
                     <Grid xs={6}>
@@ -125,7 +135,7 @@ const Orders: React.FC = () => {
             </Grid>
           );
         })}
-      </>
+      </Grid>
       <Grid style={{ marginTop: 20 }} container justify="center">
         <Pagination
           page={page}

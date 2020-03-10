@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, CssBaseline } from '@material-ui/core'
+import { Container, CssBaseline, ThemeProvider, createMuiTheme } from '@material-ui/core'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Auth from 'pages/Auth';
 import Orders from 'pages/Orders'
@@ -18,30 +18,28 @@ import { get } from 'lodash';
 import PrivateRoute from 'components/PrivateRoute';
 import { store, persistor } from 'store'
 import Home from 'pages/Home';
+import Layout from 'components/Layout';
 
 
 const App = () => {
-
-  
+  const theme = createMuiTheme({
+    overrides: {
+      MuiTableCell: {
+        head: {
+          fontSize: '1.1rem',
+        },
+      },
+      MuiAppBar: {
+        colorSecondary: {
+            backgroundColor: '#000',
+        },
+      },
+    },
+  })
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <Router>
-        <CustomAppBar />
-        <CssBaseline />
-        <Route path='/' exact component={Home}></Route>
-        <Route path="/products" component={Products} />
-
-        <Container style={{paddingTop: '30px', paddingBottom: '50px'}}>
-          <Route path="/product/:id" component={Product} />
-          <Route path="/shops" component={Shops} />
-          <PrivateRoute path="/cart" component={Cart} />
-          <PrivateRoute path='/user' component={UserForm} />
-          <Route path='/shop/:id' component={Shop} />
-          <Route path="/auth" exact component={Auth} />
-          <PrivateRoute path="/orders" component={Orders} />
-        </Container>
-        </Router>
+      <Layout />
       </PersistGate>
     </Provider>
   );

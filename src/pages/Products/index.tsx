@@ -13,15 +13,19 @@ const Products = () => {
 
   const { data, fetch, loading } = useFetch(fetchProducts);
   const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
-    fetch(page);
-  }, [fetch, page]);
+    fetch(page, searchQuery);
+  }, [fetch, page, searchQuery]);
 
   const handleChange = (event: any, value: number) => {
     setPage(value);
   };
-
+  const onSubmit = (values: any) => {
+    setSearchQuery(values.searchQuery)
+    // setPage(1)
+  }
   const onChangePrice = useCallback(
     (event: any, newValue: number[]) => {
       setValue(newValue as number[]);
@@ -41,7 +45,7 @@ const Products = () => {
   return (
     <Grid container>
       <Grid item xs={3}>
-        <Filters value={value} onChange={onChangePrice} products={data} page={page} />
+        <Filters value={value} onSubmit={onSubmit} onChange={onChangePrice} products={data} page={page} />
       </Grid>
       <Grid item xs={9}>
         <Container>

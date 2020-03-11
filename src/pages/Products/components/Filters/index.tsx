@@ -36,9 +36,10 @@ interface IProps {
   onChange?: any,
   value: number[],
   products: any,
-  page?: number
+  page?: number,
+  onSubmit: any,
 }
-const Filters = ({ products, value, onChange, page }: IProps) => {
+const Filters = ({ products, value, onChange, page, onSubmit }: IProps) => {
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -50,6 +51,19 @@ const Filters = ({ products, value, onChange, page }: IProps) => {
   return (
     <Container>
           <div className={classes.root}>
+          <ExpansionPanel expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3bh-content"
+          id="panel3bh-header"
+        >
+          <Typography className={classes.heading}>Поиск</Typography>
+     
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <SearchFilter onSubmit={onSubmit} page={page} />
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
       <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -73,19 +87,6 @@ const Filters = ({ products, value, onChange, page }: IProps) => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
         <PriceFilter onChange={onChange} products={products} value={value} />
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography className={classes.heading}>Поиск</Typography>
-     
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <SearchFilter products={products} page={page} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>

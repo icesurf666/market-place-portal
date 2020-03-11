@@ -1,14 +1,9 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import { IUser } from "react-app-env";
 import { get, sumBy } from "lodash";
 import { useSelector } from "react-redux";
-import {
-  Button,
-  Grid,
-  Typography,
-  Paper
-} from "@material-ui/core";
+import { Button, Grid, Typography, Paper, TextField } from "@material-ui/core";
 import createOrder from "api/createOrder";
 import useCart from "hooks/useCart";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,30 +13,46 @@ import AddIcon from "@material-ui/icons/Add";
 
 const CartTable = () => {
   const { items, clear, removeItem, addItem, removeItemCount } = useCart();
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const handleCountry = (event: any) => {
+    setCountry(event.target.value);
+  };
+  const handleCity = (event: any) => {
+    setCity(event.target.value);
+  };
+  const handlePhone = (event: any) => {
+    setPhone(event.target.value);
+  };
+  const handleAddress = (event: any) => {
+    setAddress(event.target.value);
+  };
+
   const handleDelete = (selectableRows: number) => {
     items
       .filter((item, index) => index === selectableRows)
       .map(remove => {
         removeItem(remove);
       });
-  }
+  };
 
   const handleAdd = (selectableRows: number) => {
     items
       .filter((item, index) => index === selectableRows)
       .map(add => {
-        addItem(add)
+        addItem(add);
       });
-  }
+  };
 
   const handleRemove = (selectableRows: number) => {
     items
       .filter((item, index) => index === selectableRows)
       .map(add => {
-        removeItemCount(add)
+        removeItemCount(add);
       });
-  }
-
+  };
 
   const columns = [
     {
@@ -92,43 +103,48 @@ const CartTable = () => {
           );
         }
       }
-    },
+    }
   ];
 
   const getUser: IUser = useSelector((store: any) =>
     get(store, "auth.user.user", [])
   );
 
-  const carts =
-    items.map((item, index) => {
-      const total = item.product.price * item.count;
-      return [item.product.name, item.product.price, total, item.count, index];
-    });
-
+  const carts = items.map((item, index) => {
+    const total = item.product.price * item.count;
+    return [item.product.name, item.product.price, total, item.count, index];
+  });
 
   const products = items.map(item => {
     return { id: item.product.id, amount: item.count };
   });
-  ;
-
   const userId = getUser.id;
-  const payload = { products, user: { id: userId } };
-
   const onResetCart = useCallback(() => {
     clear();
   }, []);
-
-  const handleClick = useCallback(async () => {
-    createOrder(payload).then(res => {
-      window.location = res.data.acquiring_url;
-      clear();
-    });
-  }, []);
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+    try {
+      await createOrder({
+        products,
+        user: { id: userId },
+        city,
+        country,
+        phone_mobile: phone,
+        address
+      }).then(res => {
+        window.location = res.data.acquiring_url;
+        clear();
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   const total = items.map((item, index) => {
     const total = item.product.price * item.count;
-    return { total }
+    return { total };
   });
-  const sum = sumBy(total, 'total')
+  const sum = sumBy(total, "total");
   return (
     <>
       <Grid container justify="space-between">
@@ -143,15 +159,37 @@ const CartTable = () => {
               selectableRows: "none",
               print: false,
               download: false,
-              viewColumns: false,
+              viewColumns: false
             }}
           />
         </Grid>
         <Grid item xs={3}>
           <Paper style={{ padding: 16 }}>
-            <Typography variant='h5'>
-              Итого: {sum}₽
-            </Typography>
+            <Typography variant="h5">Итого: {sum}₽</Typography>
+            <TextField
+              id="standart-basic"
+              onChange={handleCountry}
+              fullWidth
+              label="Страна"
+            />
+            <TextField
+              id="standart-basic"
+              onChange={handleCity}
+              fullWidth
+              label="Город"
+            />
+            <TextField
+              id="standart-basic"
+              onChange={handleAddress}
+              fullWidth
+              label="Адрес"
+            />
+            <TextField
+              id="standart-basic"
+              onChange={handlePhone}
+              fullWidth
+              label="Номер телефона"
+            />
             <Button
               onClick={handleClick}
               variant="contained"
@@ -160,7 +198,7 @@ const CartTable = () => {
               style={{ marginBottom: 20, marginTop: 10 }}
             >
               Оплатить
-          </Button>
+            </Button>
             <Button
               variant="contained"
               color="secondary"
@@ -169,7 +207,7 @@ const CartTable = () => {
               onClick={onResetCart}
             >
               Очистить корзину
-          </Button>
+            </Button>
             <Typography variant="h6">{}</Typography>
           </Paper>
         </Grid>

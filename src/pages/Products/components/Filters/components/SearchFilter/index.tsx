@@ -29,20 +29,12 @@ const useStyles = makeStyles({
 
 interface IProps {
   page?: number
-  products: any
+  onSubmit: any,
 }
 
-const SearchFilter = ({page, products}: IProps) => {
+const SearchFilter = ({onSubmit}: IProps) => {
   const classes = useStyles();
-  const { data, fetch, loading } = useFetch(searchProducts);
 
-  const onSubmit = useCallback((values: any) => {
-    return products.data.filter((product: IProduct) => {
-      return product.name
-          .toLowerCase()
-          .indexOf(values.q.toLowerCase()) >  -1;
-  });
-  }, [products])
 
   
   return (
@@ -55,7 +47,7 @@ const SearchFilter = ({page, products}: IProps) => {
                   <Field
                     fullWidth
                     required
-                    name="q"
+                    name="searchQuery"
                     component={TextField}
                     type="text"
                     label="Название"

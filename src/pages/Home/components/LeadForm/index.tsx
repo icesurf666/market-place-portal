@@ -7,6 +7,7 @@ import leads from 'api/leads'
 import { useDispatch } from 'react-redux';
 import useFetch from 'hooks/useFetch';
 import { useHistory } from 'react-router-dom';
+import { validate } from './validate'
 
 const LeadForm: React.FC = () => {
   const { data, fetch: onSubmit } = useFetch(leads)
@@ -18,6 +19,7 @@ const LeadForm: React.FC = () => {
   return (
     <Form
         onSubmit={onSubmit}
+        validate={validate}
         render={({ handleSubmit, submitting, error, pristine, values }) => (
           <form onSubmit={handleSubmit} noValidate>
             <Paper style={{ padding: 16 }}>
@@ -36,11 +38,42 @@ const LeadForm: React.FC = () => {
                   <Field
                     fullWidth
                     required
+                    name="name"
+                    component={TextField}
+                    type="text"
+                    label="Имя Фамилия"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    fullWidth
+                    required
+                    name="password"
+                    component={TextField}
+                    type="password"
+                    label="Пароль"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    fullWidth
+                    required
+                    name="c_password"
+                    component={TextField}
+                    type="password"
+                    label="Повторите пароль"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    fullWidth
+                    required
                     name="phone"
                     type="text"
                     component={TextField}
                     label="Телефон"
                   />
+                  </Grid>
                 <Grid item xs={12}>
                   <Field
                     fullWidth
@@ -52,9 +85,11 @@ const LeadForm: React.FC = () => {
                     label="Описание вашей деятельности"
                   />
                   </Grid>
-                <FormHelperText variant='filled' id="component-error-text">{data && data.message}</FormHelperText>
+                <FormHelperText variant='filled' id="component-error-text">
+                  {data && data.success ? 'Успешно, перейдите на почту.' : data && data.success === false ? 'Такой пользователь уже существует' : ''}
+                  </FormHelperText>
                 </Grid>
-                <Grid item style={{ marginTop: 16 }}>
+                <Grid item style={{ marginTop: 16, textAlign: 'center' }}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -65,7 +100,6 @@ const LeadForm: React.FC = () => {
                     Подать заявку
                   </Button>
                 </Grid>
-              </Grid>
             </Paper>
   </form>
         )}

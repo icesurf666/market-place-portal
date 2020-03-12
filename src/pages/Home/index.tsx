@@ -7,7 +7,7 @@ import {
   Typography,
   Button
 } from "@material-ui/core";
-import img from "./assets/2.jpg";
+import img from "./assets/4.jpg";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Animated } from "react-animated-css";
 import ShopImages from "./components/ShopImages";
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
             animationInDelay={1000}
           >
             <Typography variant="h3" align="center" className={classes.h3}>
-              Какой-то текст
+              Создайте магазин в пару кликов
             </Typography>
           </Animated>
           <div className={classes.wrap}>
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
                 className={classes.btn}
                 onClick={handleOpen}
               >
-                Кнопка
+                Создать заявку
               </Button>
               <SimpleModal title={'Подать заявку'} open={modalVisible} close={handleClose}>
               

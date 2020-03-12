@@ -1,13 +1,17 @@
-import React, { useCallback } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-import { IProduct } from 'react-app-env';
+import React, { useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
+import { IProduct } from "react-app-env";
+import { Form, Field } from "react-final-form";
+import Button from "@material-ui/core/Button";
+import { Grid } from "@material-ui/core";
+import { TextField } from "final-form-material-ui";
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
-  },
+    width: 300
+  }
 });
 
 function valuetext(value: number) {
@@ -15,34 +19,58 @@ function valuetext(value: number) {
 }
 
 interface IProps {
-  onChange?: any,
-  value: number[],
-  products: IProduct[],
+  onChange?: any;
+  onSubmit: any;
+  defaultValues: any,
 }
 
-
-const PriceFilter = ({onChange, products}: IProps) => {
+const PriceFilter = ({ onSubmit, defaultValues }: IProps) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState<number[]>([1, 3000]);
 
-
-  // const handleChange = useCallback((event: any, newValue: number | number[]) => {
-  //   setValue(newValue as number[]);
-  //   return products.filter((product: IProduct) => product.price >= value[0] && product.price <= value[1])
-  // }, [products]);
-  
   return (
     <div className={classes.root}>
-      <Slider
-        min={1}
-        max={9999}
-        value={value}
-        onChange={onChange}
-        valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
-        getAriaValueText={valuetext}
+      <Form
+        onSubmit={onSubmit}
+        initialValues={{ min: defaultValues.minPrice, max: defaultValues.maxPrice }}
+        render={({ handleSubmit, submitting, error, pristine, values }) => (
+          <form onSubmit={handleSubmit} noValidate>
+            <Grid container alignItems="center" justify="center" spacing={2}>
+              <Grid item xs={6}>
+                <Field
+                  fullWidth
+                  required
+                  name="min"
+                  component={TextField}
+                  type="number"
+                  label="От"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Field
+                  fullWidth
+                  required
+                  name="max"
+                  type="number"
+                  component={TextField}
+                  label="До"
+                />
+              </Grid>
+              <Grid container justify='flex-end' style={{ marginTop: 16 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={submitting}
+                  size="medium"
+                >
+                  Поиск
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        )}
       />
     </div>
   );
-}
-export default PriceFilter
+};
+export default PriceFilter;

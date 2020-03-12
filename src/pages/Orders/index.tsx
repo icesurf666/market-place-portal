@@ -15,6 +15,7 @@ import {
   List,
   ListItemIcon
 } from "@material-ui/core";
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Pagination from "@material-ui/lab/Pagination";
 import humanizeStatus from "utils/humanizeStatus";
 import setColors from "utils/setColors";
@@ -109,12 +110,28 @@ const Orders: React.FC = () => {
                     </Grid>
                     <Grid xs={6}>
                       <List>
+                      <ListItem>
+                          <ListItemIcon>
+                            <LocalShippingIcon />
+                          </ListItemIcon>
+                          <ListItemText>
+                            {`Cтоимость доставки ${order.delivery_price}`}
+                          </ListItemText>
+                        </ListItem>
                         <ListItem>
                           <ListItemIcon>
                             <MonetizationOnIcon />
                           </ListItemIcon>
                           <ListItemText>
-                            {`Общая стоимость заказа ${order.total_price}`}
+                            {`Стоимость заказа ${order.total_price}`}
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <MonetizationOnIcon />
+                          </ListItemIcon>
+                          <ListItemText>
+                            {`Общая стоимость ${order.total_price + order.delivery_price}`}
                           </ListItemText>
                         </ListItem>
                         <ListItem>
@@ -127,6 +144,8 @@ const Orders: React.FC = () => {
                             {humanizeStatus(order.status)}
                           </ListItemText>
                         </ListItem>
+
+                        
                       </List>
                     </Grid>
                   </Grid>

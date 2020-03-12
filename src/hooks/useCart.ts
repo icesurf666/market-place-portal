@@ -51,6 +51,9 @@ function useCart(): ICart {
     if (index === -1) {
       dispatch(addToCart({ ...item, id: item.id }))
     } else {
+      if(items[index].count === 1) {
+        return items[index].count = 1
+      }
       items[index].count -= 1
       dispatch(updateCart(items))
     }

@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
                     name="login"
                     component={TextField}
                     type="text"
-                    label="Логин"
+                    label="Имя Фамилия"
                   />
                 </Grid>
                 <Grid item xs={12}>

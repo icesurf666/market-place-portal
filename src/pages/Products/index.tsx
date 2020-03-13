@@ -27,6 +27,7 @@ const Products = () => {
     setPage(value);
   };
   const onSubmit = (values: any) => {
+    setPage(1)
     setSearchQuery(values.searchQuery);
   };
 

@@ -10,10 +10,10 @@ interface IProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
-    display: "flex"
+    display: "flex",
   },
   textWrap: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   paper: {
     padding: 16,

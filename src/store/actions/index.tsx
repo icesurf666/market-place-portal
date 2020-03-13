@@ -56,7 +56,6 @@ export function setUserAfterUpdate(user: IUser): IUpdateUserAction {
 }
 
 export function setUserAfterSignIn(user: IUser): ISignInAction {
-  console.log(user)
   return {
     type: SIGNIN_USER,
     payload: user,

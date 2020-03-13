@@ -6,7 +6,10 @@ import {
   makeStyles,
   Theme,
   Grid,
-  IconButton
+  IconButton,
+  ListItem,
+  Avatar,
+  ListItemAvatar
 } from "@material-ui/core";
 import { IProduct, ICartItem, IUser } from "react-app-env";
 import { useSelector } from "react-redux";
@@ -14,7 +17,7 @@ import { get, omit } from "lodash";
 import useCart from "hooks/useCart";
 import Rating from "@material-ui/lab/Rating";
 import Availability from "./components/Availability";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     margin: {
@@ -26,7 +29,22 @@ const useStyles = makeStyles((theme: Theme) =>
     wrap: {
       marginTop: 20,
       marginLeft: 50
-    }
+    },
+    avatar: {
+      display: "flex",
+      alignItems: 'center',
+      marginTop: 5,
+      marginBottom: 5,
+    },
+    textWrap: {
+      marginLeft: 10,
+      color: '#000000',
+      textDecoration: 'none',
+    },
+    text: {
+      color: '#000000',
+      textDecoration: 'none',
+    },
   })
 );
 
@@ -63,6 +81,12 @@ const DescriptionCart = ({ product }: IProps) => {
       <Grid container className={classes.wrap}>
         <Grid item xs={12}>
           <Typography variant="h4">{product.name}</Typography>
+          <Link style={{textDecoration: 'none'}} to={`/shop/${product.shop.id}`} className={classes.avatar}>
+            <Avatar src={product.shop && product.shop.logo && product.shop.logo.src} />
+            <div className={classes.textWrap}>
+              <Typography className={classes.text}>{product.shop.name}</Typography>
+            </div>
+          </Link>
           <Rating name="read-only" value={product.rating} readOnly />
           <div style={{ fontSize: 16 }}>Оценка товара: {product.rating} из 5</div>
           <Availability amount={product.amount} />

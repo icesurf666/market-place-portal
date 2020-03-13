@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import DescriptionCart from 'components/DescriptionCart';
 import fetchProduct from 'api/fetchProduct';
 import useFetch from 'hooks/useFetch';
@@ -26,7 +26,6 @@ const Product: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, 
         <DescriptionCart product={data.data} />
       </Grid>
       <div style={{fontSize: 16}} dangerouslySetInnerHTML={{__html: data.data.html}}></div>
-
       <Grid item xs={12}>
         <TabsReviews product={data.data} />
       </Grid>

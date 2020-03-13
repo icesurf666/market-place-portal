@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Typography, makeStyles, CardMedia, Card } from '@material-ui/core';
+import { Grid, Typography, makeStyles, CardMedia, Card, Link } from '@material-ui/core';
 import fetchShop from 'api/fetchShop';
 import useFetch from 'hooks/useFetch';
 import { IProduct } from 'react-app-env';
@@ -29,7 +29,6 @@ const Shop: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, loc
 
   if(!data) return null
 
-  console.log(data.data.products)
   return (
     <>
     <Grid>
@@ -42,6 +41,11 @@ const Shop: React.FC<RouteComponentProps<{id: string}>> = ({ match, history, loc
       <Typography>
         {data.data.description}
       </Typography>
+      { data.data.contact &&
+      <Typography style={{color: '#000'}} component={Link} href={`tel:${data.data.contact.phone_mobile}`}>
+        {`Телефон: ${data.data.contact.phone_mobile}`}
+      </Typography>
+}
     </Grid>
   <Grid container spacing={1}>
     {data.data.products.map((product: IProduct) => {

@@ -23,7 +23,6 @@ const UserForm: React.FC = () => {
 
   useEffect(() => {
     if (!data) { return }
-    console.log(data.data)
     dispatch(setUserAfterUpdate(data.data))
   }, [data])
 

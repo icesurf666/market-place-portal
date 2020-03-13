@@ -48,13 +48,11 @@ const Products = () => {
   );
 
   const onSubmitPrice = (values: any) => {
-    console.log(values)
     setMin(values.min)
     setMax(values.max)
   }
 
   if (!data) return null;
-  console.log(data);
   return (
     <Grid container>
       <Grid item xs={3}>

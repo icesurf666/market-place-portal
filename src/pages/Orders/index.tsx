@@ -55,7 +55,6 @@ const Orders: React.FC = () => {
 
  
 
-  console.log(data);
   const normalizeData = data.data.map((items: any, index: number) => {
     const prod = items.products.map((product: any) => {
       return [
